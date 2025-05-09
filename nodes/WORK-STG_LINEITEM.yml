@@ -241,17 +241,52 @@ operation:
               - columnCounter: 5b08722b-e7ac-4d0a-b669-a361d5860bc5
                 stepCounter: 40cf6271-80e5-4dac-aaad-9e1de019d762
             transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 4e608194-62a9-4fc8-b2a2-aa358eb534ca
+          stepCounter: fe3fe80a-64e2-48f7-bbaa-2d97d6c34da6
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: PS_AVAILQTY
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 18520362-2f2a-4876-92c1-ab571ce2d459
+                stepCounter: 8a9644dc-6def-4061-bb87-bf6de2389c1e
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: aafb291e-5258-417b-ad38-599b05316fa7
+          stepCounter: fe3fe80a-64e2-48f7-bbaa-2d97d6c34da6
+        config: {}
+        dataType: NUMBER(12,2)
+        description: ""
+        name: PS_SUPPLYCOST
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 1d53d292-8bc8-40da-8fc2-e96d0b86fa85
+                stepCounter: 8a9644dc-6def-4061-bb87-bf6de2389c1e
+            transform: ""
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          LINEITEM: 40cf6271-80e5-4dac-aaad-9e1de019d762
+          PARTSUPP: 8a9644dc-6def-4061-bb87-bf6de2389c1e
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: SAMPLE
             nodeName: LINEITEM
+          - locationName: SAMPLE
+            nodeName: PARTSUPP
         join:
-          joinCondition: FROM {{ ref('SAMPLE', 'LINEITEM') }} "LINEITEM"
+          joinCondition: |-
+            FROM {{ ref('SAMPLE', 'LINEITEM') }} "LINEITEM"
+            INNER JOIN {{ ref('SAMPLE', 'PARTSUPP') }} "PARTSUPP"
+            ON "LINEITEM"."L_PARTKEY" = "PARTSUPP"."PS_PARTKEY"
         name: STG_LINEITEM
         noLinkRefs: []
   name: STG_LINEITEM
